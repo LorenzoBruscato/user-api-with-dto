@@ -84,29 +84,46 @@ spring.jpa.properties.hibernate.format_sql=true
 
 * **POST** `/usuarios`
 
+* **Http:** `http://localhost:8080/usuarios`
+
+* **Body:**
 ```json
 {
-  "email": "teste@email.com",
+  "email": "novo@email.com",
   "senha": "123456"
 }
 ```
 
----
-
-### 🔹 Listar usuários
-
-* **GET** `/usuarios`
-
+* **Resposta (201 Created):**
+```json
+{
+    "admin": false,
+    "email": "novo@email.com",
+    "id": 3
+}
+```
 ---
 
 ### 🔹 Atualizar usuário
 
 * **PUT** `/usuarios/{id}`
 
+* **Htpp** `http://localhost:8080/usuarios/1`
+
+* **Body:**
 ```json
 {
-  "email": "novo@email.com",
+  "email": "adm2@email.com",
   "senha": "123456"
+}
+```
+
+* **Resposta (200 OK):**
+```json
+{
+    "admin": true,
+    "email": "adm2@email.com",
+    "id": 1
 }
 ```
 
@@ -115,6 +132,35 @@ spring.jpa.properties.hibernate.format_sql=true
 ### 🔹 Deletar usuário
 
 * **DELETE** `/usuarios/{id}`
+
+* **Htpp** `http://localhost:8080/usuarios/1`
+
+* **Resposta (204 No Content):**
+
+---
+
+### 🔹 Listar usuários
+
+* **GET** `/usuarios`
+
+* **Htpp** `http://localhost:8080/usuarios`
+
+* **Resposta (200 Ok):**
+```json
+{
+    {
+        "admin": false,
+        "email": "user@email.com",
+        "id": 2
+    },
+    {
+        "admin": false,
+        "email": "novo@email.com",
+        "id": 3
+    }
+```
+
+* **📌 Lembre-se:** aqui o usuario ``adm2@email.com`` não aparece, ele foi apagado quando deletamos o usuário com o id 1
 
 ---
 
