@@ -11,38 +11,71 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controller responsável pelos endpoints de usuários.
+ */
 @RequestMapping("/usuarios")
 @RestController
 public class UsuarioController {
 
+    // Service com regras de negócio
     private final UsuarioService usuarioService;
 
+    // Injeção de dependência via construtor
     @Autowired
     public UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
 
+    /**
+     * Cria um novo usuário
+     */
     @PostMapping
     public ResponseEntity<UsuarioResponseDto> salvar(@RequestBody UsuarioRequestDto dto) {
         Usuario usuario = usuarioService.salvar(dto.transformaParaObjeto());
-        return new ResponseEntity<>(UsuarioResponseDto.transformaEmDTO(usuario), HttpStatus.CREATED);
+
+        // Retorna 201 Created com o usuário criado
+        return new ResponseEntity<>(
+                UsuarioResponseDto.transformaEmDTO(usuario),
+                HttpStatus.CREATED
+        );
     }
 
+    /**
+     * Remove um usuário pelo ID
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         usuarioService.deletar(id);
+
+        // Retorna 204 No Content
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Atualiza um usuário existente
+     */
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioResponseDto> atualizar(@PathVariable Long id,
-                                                        @RequestBody UsuarioRequestDto dto) {
+    public ResponseEntity<UsuarioResponseDto> atualizar(
+            @PathVariable Long id,
+            @RequestBody UsuarioRequestDto dto) {
+
         Usuario usuario = usuarioService.atualizar(id, dto);
-        return ResponseEntity.ok(UsuarioResponseDto.transformaEmDTO(usuario));
+
+        // Retorna 200 OK com os dados atualizados
+        return ResponseEntity.ok(
+                UsuarioResponseDto.transformaEmDTO(usuario)
+        );
     }
 
+    /**
+     * Lista todos os usuários
+     */
     @GetMapping
     public ResponseEntity<List<UsuarioResponseDto>> listar() {
-        return ResponseEntity.ok(usuarioService.listarUsuarios());
+
+        return ResponseEntity.ok(
+                usuarioService.listarUsuarios()
+        );
     }
 }
