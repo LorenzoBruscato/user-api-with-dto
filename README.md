@@ -20,6 +20,7 @@ API REST desenvolvida com **Spring Boot** para gerenciamento de usuários, com f
 ```
 src/main/java/com/lorenzo/backend/login
 │
+├── config       # Configurações da aplicação (segurança, beans)
 ├── controller   # Endpoints da API
 ├── service      # Regras de negócio
 ├── repository   # Acesso ao banco de dados
@@ -54,6 +55,9 @@ INSERT INTO usuario (email, senha, admin) VALUES
 ('user@email.com', '123456', FALSE);
 
 ```
+
+* 📌 Não é possível criar usuário administrador via API no momento (apenas via banco)
+* 📌 Recomenda-se criar usuários via API para garantir que a senha seja armazenada corretamente com criptografia.
 
 ---
 
@@ -164,6 +168,16 @@ spring.jpa.properties.hibernate.format_sql=true
 
 ---
 
+## 🔐 Segurança
+
+A API utiliza:
+
+* Criptografia de senha com BCrypt
+* Spring Security para controle de acesso
+* Configuração de endpoints públicos e protegidos
+
+---
+
 ## 🧪 Testes
 
 A API pode ser testada utilizando:
@@ -181,11 +195,11 @@ A API pode ser testada utilizando:
 
 ---
 
-## 🔥 Melhorias futuras
+## 🔥 Lista de Melhorias
 
-* 🔐 Criptografia de senha (BCrypt)
-* 🔑 Autenticação com JWT
-* 🧾 Tratamento de exceções global
+* 🔐 Criptografia de senha com BCrypt ✅ (implementado)
+* 🔑 Autenticação e autorização com JWT ⏳ (em desenvolvimento)
+* 🧾 Tratamento global de exceções⏳
 
 ---
 
